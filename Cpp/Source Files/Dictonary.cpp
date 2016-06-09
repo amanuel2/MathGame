@@ -1,6 +1,6 @@
 #include<vector>
 #include "../Header Files/Dictonary.h"
-
+//Defined Marcos. 
 #define PLAY_INCOS 011
 #define END_MAIN  100
 #define NO_STR 101
@@ -20,12 +20,13 @@ Dictonary::Dictonary()
 {
 }
 
+//Rand Function.
 int myRand(int low, int high) 
 {
    return rand() % (high - low + 1) + low;
 }
 
-
+//Random Array. [RANDOM QUESTION]
 string Dictonary::randomArray(const string &opt)
 {
     short ran = myRand(0,16);
@@ -35,17 +36,20 @@ string Dictonary::randomArray(const string &opt)
         return ( (arrayPossibleRandians[ran]) );
 }
 
+//Random Unit 
 string Dictonary::radOrDegRAND()
 {
     return(radDeg[myRand(0,1)]);
 }
 
+
+//Random Arethemetic [cos,sin,rad]
 string Dictonary::getPossibleArethemtic()
 {
     return(possibleArethemtic[myRand(0,2)]);
 }
 
-
+//The Huge Function, treat this as the main function of this file
 double Dictonary::getComputedValue(string player,int ROUND, string player1Username, string player2Username,short TURN_PARAM)
 {
     string unit = this -> radOrDegRAND();
@@ -224,6 +228,7 @@ double Dictonary::getComputedValue(string player,int ROUND, string player1Userna
 }
 
 
+//Ending Controller
 double Dictonary::Ending()
 {
     switch(COMPLETE_END)
@@ -235,6 +240,7 @@ double Dictonary::Ending()
             COMPLETE_END = 1;
             break;
         case 1:
+        //When it completely Ends Display Stats
             cout << "~~~~~~~ PLAYER 1 STATS ~~~~~~~" << endl;
             cout << "Correct : " << player1Correct.size() << endl;
             cout << "Incorrect : " << player1Incorrect.size() << endl;
@@ -260,6 +266,10 @@ double Dictonary::Ending()
 
 }
 
+//Template Specialization,
+//basically can put any argument
+//in function of any type.
+//All types named as T
 template <typename T>
 std::string to_string(T &value) {
     stringstream sstr;
@@ -283,11 +293,13 @@ std::string to_string(T &value) {
 //     return avgTime;
 // }
 
+//Total Time Get
 int Dictonary::totalTime(const int& PLAYER_NUM, const std::string& opt)
 {
      int totalReturn = 0;
          if(PLAYER_NUM == 1)
          {
+             //Get total time
              if(opt == "sec")
              {
                  for(string_int_it it=player1TimingSeconds.begin(); it!=player1TimingSeconds.end(); it++)
@@ -321,33 +333,42 @@ int Dictonary::totalTime(const int& PLAYER_NUM, const std::string& opt)
                  }
              }
          }
+         //Error Defintion
          else
              cout << "PLAYER_IDENT_ERROR<AVERAGE> : " << PLAYER_IDENT_ERROR << endl;
             
+        //return total time took.    
          return (totalReturn);    
 }
 
+//display for STATS
 string Dictonary::STATS(const string &opt, int player1SIZE_CORRECT, int PLAYER1SIZE_INCORECT
                         , int PLAYER2SIZE_CORRECT , int PLAYER2SIZE_INCORRECT, int player)
 {
     bool win;
     float avgPERC2,avgPERC;
     string returner;
+    //if option is WIN
     if(opt == "WIN")
     {
-        win = true;
-        if(player1SIZE_CORRECT > PLAYER2SIZE_CORRECT)
-            returner = "~~~~~~~~~~~~PLAYER 1 HAS WON!!!~~~~~~~~~~~~";
-        else if(PLAYER2SIZE_CORRECT > player1SIZE_CORRECT)
-            returner = "~~~~~~~~~~~~PLAYER 2 HAS WON!!!~~~~~~~~~~~~";
-        else if(PLAYER2SIZE_CORRECT == player1SIZE_CORRECT)
-            returner = "~~~~~~~~~~~~IT IS A TIE!!!~~~~~~~~~~~~";
-        else
-        {
-            cout << "WIN_STAGE ERROR " << WIN_STAGE << endl;
-            exit(1);
-        }
+       //Check who has won, and set them to
+       //string reutner, which will be 
+       //returned at the end.
+            win = true;
+            if(player1SIZE_CORRECT > PLAYER2SIZE_CORRECT)
+                returner = "~~~~~~~~~~~~PLAYER 1 HAS WON!!!~~~~~~~~~~~~";
+            else if(PLAYER2SIZE_CORRECT > player1SIZE_CORRECT)
+                returner = "~~~~~~~~~~~~PLAYER 2 HAS WON!!!~~~~~~~~~~~~";
+            else if(PLAYER2SIZE_CORRECT == player1SIZE_CORRECT)
+                returner = "~~~~~~~~~~~~IT IS A TIE!!!~~~~~~~~~~~~";
+            else
+            {
+                cout << "WIN_STAGE ERROR " << WIN_STAGE << endl;
+                exit(1);
+            }
     }
+    //One Feauture i was about to add, was average. 
+    //But Sadly didnt finish it :(
     else if (opt == "AVG")
      {
          switch(player)
@@ -368,6 +389,8 @@ string Dictonary::STATS(const string &opt, int player1SIZE_CORRECT, int PLAYER1S
     return returner;
     
 }
+
+//Checks if string contains a number.
 bool contains_number(std::string &c)
 {
     return (
@@ -385,20 +408,23 @@ bool contains_number(std::string &c)
 }
 
 
+//Smart Detection
 bool Dictonary::smartDetection(string USER_ANWSER)
 {
+    //returning.
+    //If returner is false, 
+    //smart detection has percieved an error
     bool returner;
     bool CONTAINS_NUMBER = contains_number(USER_ANWSER);
     if(CONTAINS_NUMBER == false)
-    {
         returner = false;
-    }
     //     //1 , -1 BUG FIX
     else if(USER_ANWSER == "1" || USER_ANWSER == "-1")
         returner = true;
     //Number Bug Fix
     else if(CONTAINS_NUMBER == true)
         returner = true;
+    //UPDATED. und.
     else if(USER_ANWSER.find("und") != std::string::npos)
         returner = true;
     else if(USER_ANWSER.find("sqrt") == std::string::npos)
@@ -409,6 +435,8 @@ bool Dictonary::smartDetection(string USER_ANWSER)
             returner = false;
         }
     }
+    // Check if user accidently typed
+    //s,q,r,or t
     else if(USER_ANWSER.find("s") != std::string::npos)
         returner = false;
     else if(USER_ANWSER.find("q") != std::string::npos)
@@ -458,20 +486,25 @@ bool Dictonary::DUPE_CHECK_FUNC(string val_dupe_check, string unit_dupe_check)
     return isDupeNest;
 }
 
+//Check User Anwser if it is correct, or incorrect
 double Dictonary::checkUserAnwser(const string &opt, int ROUND, string player)
 {
     if(opt.compare("c") == 0)
     {
+        //If Correct
          if(player.compare("Player One") == 0)
                  {
+                     //Record the data
                      player1Correct.push_back(ROUND);
                  }
                  else if(player.compare("Player Two") == 0)
                  {
+                     //Record the data
                      player2Correct.push_back(ROUND);
                  }
                  else
                  {
+                     //Another predefined error
                      cout << "Internal Error. PLAYER_INCONSIST. ERROR " << PLAY_INCOS << endl;
                      exit(1);
                  }
@@ -479,16 +512,20 @@ double Dictonary::checkUserAnwser(const string &opt, int ROUND, string player)
     
     else if(opt.compare("i") == 0)
     {
+        //If InCorrect
         if(player.compare("Player One") == 0)
         {
+            //Record the data
               player1Incorrect.push_back(ROUND);
            }
             else if(player.compare("Player Two") == 0)
             {
+                //Record the data
                 player2Incorrect.push_back(ROUND);
             }
             else
             {
+                 //Another predefined error
                 cout << "Internal Error. PLAYER_INCONSIST. ERROR " << PLAY_INCOS << endl;
                 exit(1);
             }
@@ -496,6 +533,7 @@ double Dictonary::checkUserAnwser(const string &opt, int ROUND, string player)
 }
 
 
+//NOT USED
 double Dictonary::conversionPItoREAL(string piNONREAL)
 {
     short PIREAL;
@@ -512,7 +550,7 @@ double Dictonary::conversionPItoREAL(string piNONREAL)
 
 
 
-//degreeToRadians
+//Convert degree to radians
 double Dictonary::d2r(double d)
 {
     return(d/180) * ((double) PI);

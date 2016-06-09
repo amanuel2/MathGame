@@ -1,5 +1,6 @@
 #include "../Header Files/Timer.h"
 
+//Time Class, for all this
 Timer::Timer()
 {
     stopped=false, started=false, reseted=false;

@@ -18,6 +18,7 @@ void MainGame::run()
         //Instructions
         DisplayInstructions();
         //NUM-ROUNDS
+        //Loop 3 Rounds, since there are 3 rounds.
         for (int i(0); i<=NUM_ROUNDS; i++) 
               this -> PlayRound(i);
         
@@ -51,17 +52,13 @@ void MainGame::DisplayInstructions()
     cout << "-------------------------------------------------------------------------------- \n" << endl;
     
     
-    // cout << "\t\tThis Game is called TRIG FIGHT. Two Users Compete." << endl;
-    // cout << "\t\tThere will be Three Rounds Per Player. Each will come up, as I(The AI) Tell you to." << endl;
-    // cout << "\t\tThere you will be asked the Sin/Cos/Tan of Degree/Radian of the Unit Circle" << endl;
-    // cout << "\tWe Will Calculate your Average Time At End, and Total Points. Total Points will win." << endl;
-    // cout << "\t\tNOTE : If you want to do PI to represent radian values" << endl;
-    // cout << "\t\tJust type in pi(someNumber). sqrt(someNumber). For undefined just type und" << endl;
-    // cout << "\n\t\t\tGood Luck! May the odds be ever in your favor!\n\n\n" << endl;
+    //Player 1 Username Asking
     cout << "Username of Player1 : ";
     std::cin >> player1UserName;
+     //Player 2 Username Asking
     cout << "\b \n Username of Player 2 : ";
     std::cin >> player2UsernName;
+    //Begin!
     cout << "\n Alright! " << player1UserName << " Go Ahead and Click Enter to begin the game! " << endl;
     cin.get();
     cin.get();
@@ -70,18 +67,27 @@ void MainGame::DisplayInstructions()
 
 void MainGame::PlayRound(int i)
 {
+    //String for containing Username
     string turnStr;
+    //String to pass in param
     string callerTurnStr;
+    //This is the turn of the person that i will pass in to function
     short TURN_PARAM;
     if(_turn==TURN::PLAYER1)
     {
-        turnStr = "Player One";
-        callerTurnStr = player1UserName;
-        TURN_PARAM = 1;
+        //If the turn is PLAYER1
+            //Set Values Accordingly
+            //turnstr is a 'strict conditon' variable
+            turnStr = "Player One";
+            callerTurnStr = player1UserName;
+            TURN_PARAM = 1;
     }
         
     else
     {
+        //If the turn is PLAYER2
+            //Set Values Accordingly
+            //turnstr is a 'strict conditon' variable
         turnStr = "Player Two";
         callerTurnStr = player2UsernName;
         TURN_PARAM = 2;
@@ -89,15 +95,22 @@ void MainGame::PlayRound(int i)
         
         
         
-        
+    //Telling The Player Username, its thier turn    
     cout <<  "\n\n" << " This is your turn!" << callerTurnStr << endl;
+    
+    //This is where all the What is sin of that, and timer, and valueStoring Happens. Explained in Dictonary.cpp
     dict.getComputedValue(turnStr,i,player1UserName,player2UsernName,TURN_PARAM);
     
-    if(_turn == TURN::PLAYER1)
-        _turn = TURN::PLAYER2;
-    else
-        _turn = TURN::PLAYER1;
-    //_turn = TURN::PLAYER1 ? TURN::PLAYER2 : TURN::PLAYER1;
+    //Set Turn Accordingly
+     if(_turn == TURN::PLAYER1)
+         _turn = TURN::PLAYER2;
+     else
+         _turn = TURN::PLAYER1;
+         
+    //This was the one line code for above... but no work, 
+    //for some reason the Compiler, thinks Turn::PLAYER1 is a
+    //bool
+   // _turn = TURN::PLAYER1 ? TURN::PLAYER2 : TURN::PLAYER1;
 }
 
 MainGame::~MainGame()

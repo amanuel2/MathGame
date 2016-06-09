@@ -36,6 +36,7 @@ for(it_type iterator = m.begin(); iterator != m.end(); iterator++) {
 class Dictonary
 {
 public:
+//My Hugeeee struct, where it contains all the values.
 	struct unitCircle
 	{
 		string getRadianValue(string &Inp, const string &opt)
@@ -278,6 +279,8 @@ public:
 	Dictonary();
 	~Dictonary();
 	
+	//Setting All My Necceary Public functions/varialbes for the 
+	//Source File.
 	double getComputedValue(string player,int ROUND
 							,string player1Username, string player2Username,
 							short TURN_PARAM);
@@ -297,6 +300,10 @@ public:
 	double Ending();
 	
 private:
+//Setting All My Necceary Private functions/varialbes for the 
+	//Source File.
+	
+	
 // What is the [< arethemtic >] of [< arrayPossibleRandians/degrees >]
 
 //Radians
